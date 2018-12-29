@@ -5,10 +5,10 @@ from flask import request, jsonify
 from flask_restplus import Namespace, Resource
 # from werkzeug.exceptions import BadRequest
 
-from .common.services.ingredient_store import get_demo_ingredients
+from .common.services.ingredient_store import get_demo_ingredients, get_db_ingredients
 from .common.register_error_handler import register_error_handler
 
-from .common.models.ingredient import IngredientSchema
+from .common.dtos.ingredient import IngredientSchema
 
 API = Namespace(
     "ingredients",
@@ -45,6 +45,7 @@ class Ingredients_API(Resource):
         # circle = circle_validation.data
         # point_count = point_count_validation.data
 
-        ingredients = get_demo_ingredients()
+        # ingredients = get_demo_ingredients()
+        ingredients = get_db_ingredients()
         result = ingredient_schema.dump(ingredients)
         return jsonify(result.data)

@@ -7,6 +7,8 @@ class Config(object):
     ENV = "production"
     DEBUG = False
     TESTING = False
+    SQLALCHEMY_DATABASE_URI = ""
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class ProductionConfig(Config):
     """The production configuration
@@ -18,8 +20,11 @@ class DevelopmentConfig(Config):
     """
     ENV = "development"
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:137763@localhost:5432/ingredientsdb"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class TestingConfig(Config):
     """The testing configuration
     """
     TESTING = True
+    SQLALCHEMY_DATABASE_URI = ""
