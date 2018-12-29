@@ -1,0 +1,7 @@
+{
+  "python.pythonPath": "/Users/brauls/.local/share/virtualenvs/ingredients-service-Js7REvzd-/shims/python",
+  "python.unitTest.pyTestArgs": [
+    "test"
+  ],
+  "python.unitTest.pyTestEnabled": true
+}
