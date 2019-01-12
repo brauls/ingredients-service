@@ -1,31 +1,53 @@
 """CRUD operations for ingredients.
 """
 
-import random
-
-from ..dtos.ingredient import Ingredient as IngredientDto
 from ..models.ingredient import Ingredient as IngredientEntity
+from ..converter.ingredient_converter import ingredient_entity_to_dto, ingredient_dto_to_entity
 
 from ..models import DB
 
-def get_demo_ingredients():
-    """Get a list of hard coded ingredients for demonstration.
+def get_ingredients():
+    """Find all available ingredients.
+
     Returns:
-      list(..models.ingredient.Ingredient): A list of hard coded ingredients.
+        list(IngredientDto): A list of all ingredients.
     """
-    return [
-        IngredientDto("apple"),
-        IngredientDto("banana"),
-        IngredientDto("tomato")
-    ]
+    ingredient_entities = IngredientEntity.query.all()
+    return [ingredient_entity_to_dto(entity) for entity in ingredient_entities]
 
-def get_db_ingredients():
-    ingredients = IngredientEntity.query.all()
+def get_ingredient(name):
+    """Find an ingredient by its name.
 
-    name = "demo" + str(len(ingredients))
-    ingredient = IngredientEntity(name=name)
+    Args:
+        name (string): The name of the ingredient.
 
-    DB.session.add(ingredient)
+    Returns:
+        IngredientDto: The ingredient with the given name, or None.
+    """
+    ingredient_entity = IngredientEntity.query.filter_by(name=name).first()
+    if ingredient_entity is None:
+        return None
+    return ingredient_entity_to_dto(ingredient_entity)
+
+def create_ingredient(ingredient_dto):
+    """Create a new ingredient inside the database.
+
+    Args:
+        ingredient_dto (IngredientDto): The ingredient to be created.
+    """
+    ingredient_entity = ingredient_dto_to_entity(ingredient_dto)
+    DB.session.add(ingredient_entity)
     DB.session.commit()
+    return ingredient_entity_to_dto(ingredient_entity)
 
-    return [IngredientDto(entity.name) for entity in ingredients]
+def delete_ingredient(name):
+    """Delete an existing ingredient from the database.
+
+    Args:
+      name (string): The name of the ingredient to be deleted.
+    """
+    ingredient_entity = IngredientEntity.query.filter_by(name=name).first()
+    if ingredient_entity is not None:
+        DB.session.delete(ingredient_entity)
+        DB.session.commit()
+  

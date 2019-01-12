@@ -3,7 +3,7 @@
 
 from marshmallow import Schema, fields, post_load
 
-class Ingredient(object):
+class Ingredient():
     """Class to represent an ingredient.
     """
     def __init__(self, name):
