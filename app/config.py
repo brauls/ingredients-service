@@ -23,8 +23,9 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = "postgresql://postgres:137763@localhost:5432/ingredientsdb"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-class TestingConfig(Config):
+class TestConfig(Config):
     """The testing configuration
     """
+    ENV = "test"
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = ""
+    SQLALCHEMY_DATABASE_URI = "sqlite://"
