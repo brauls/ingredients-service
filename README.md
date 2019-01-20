@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/brauls/ingredients-service.svg?branch=master)](https://travis-ci.org/brauls/ingredients-service)
+[![Coverage Status](https://coveralls.io/repos/github/brauls/ingredients-service/badge.svg?branch=master)](https://coveralls.io/github/brauls/ingredients-service?branch=master)
+
 # ingredients-service
 REST service that provides ingredients along with their availability per month
 
