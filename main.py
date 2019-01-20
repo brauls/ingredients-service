@@ -1,4 +1,4 @@
-"""Entry point for the ingredients api.
+"""Entry point for the ingredients api during development.
 """
 
 from app import APP
