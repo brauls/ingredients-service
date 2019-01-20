@@ -7,7 +7,7 @@ install:
   - "pipenv install --dev --skip-lock"
 
 script:
-  - "pipenv run pytest --cov=random_geometry_points_service test/"
+  - "pipenv run pytest --cov=app test/"
 
 after_success:
   - "pipenv run coveralls"
