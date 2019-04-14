@@ -15,8 +15,10 @@ flask = "*"
 flask-restplus = "*"
 marshmallow = "*"
 flask-sqlalchemy = "*"
-psycopg2 = "*"
+psycopg2 = "==2.7.6.1"
 gunicorn = "*"
+flask-migrate = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.6"

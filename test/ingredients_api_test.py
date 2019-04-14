@@ -17,7 +17,12 @@ def test_client():
         FlaskClient: The test client.
     """
     APP.config.from_object("app.config.TestConfig")
-    init_app(APP)
+    database = init_app(APP)
+
+    # create database schema for test module
+    with APP.app_context():
+        database.create_all()
+
     return APP.test_client()
 
 def test_post_with_valid_input(test_client):

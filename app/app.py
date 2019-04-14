@@ -18,14 +18,15 @@ def create_app():
 def init_app(flask_app):
     """Initially configure the flask app.
 
-    Initialize the ingredients api and the SQLAlchemy obkect.
+    Initialize the ingredients api and the SQLAlchemy object.
 
     Args:
         flask_app (Flask): The flask application object.
     """
     with flask_app.app_context():
         DB.init_app(flask_app)
-        DB.create_all()
-        
+
         api = init_api()
         api.init_app(flask_app)
+
+    return DB

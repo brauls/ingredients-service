@@ -17,5 +17,12 @@ REST service that provides ingredients along with their availability per month
     * `CREATE DATABASE ingredientsdb;`
     * `\l` to list all databases
     * `\c ingredientsdb` to connect to the database
+    * `\dt` to list tables
     * `\q` + `ENTER` to leave the session
-    * 
+
+### database revisions
+* [flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/)
+* create migration repository (only once): `flask db init`
+* after some model changes in code: `flask db migrate -m "comment"`
+* manually check new revision in migrations folder
+* upgrade database: `flask db upgrade`

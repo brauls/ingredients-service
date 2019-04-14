@@ -1,19 +1,23 @@
 """Config module that contains configs for the different application environments
 """
 
+import os
+
 class Config(object):
     """The base application configuration
     """
-    ENV = "production"
+    ENV = ""
     DEBUG = False
     TESTING = False
+    CSRF_ENABLED = True
     SQLALCHEMY_DATABASE_URI = ""
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class ProductionConfig(Config):
     """The production configuration
     """
-    pass
+    ENV = "production"
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', '')
 
 class DevelopmentConfig(Config):
     """The development configuration
@@ -21,7 +25,6 @@ class DevelopmentConfig(Config):
     ENV = "development"
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "postgresql://postgres:137763@localhost:5432/ingredientsdb"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class TestConfig(Config):
     """The testing configuration
