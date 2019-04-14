@@ -26,3 +26,4 @@ REST service that provides ingredients along with their availability per month
 * after some model changes in code: `flask db migrate -m "comment"`
 * manually check new revision in migrations folder
 * upgrade database: `flask db upgrade`
+* remote upgrade: `heroku run flask db upgrade --app ingredients-service`
