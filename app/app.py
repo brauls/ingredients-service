@@ -3,11 +3,11 @@
 
 from flask import Flask
 
-from .endpoints.api import init_api
 from .endpoints.common.models import DB
+from .endpoints.v1 import API_V1
 
 def create_app():
-    """Create the flask app and initialize the ingredients api.
+    """Create the flask app.
 
     Returns:
         Flask: The initialized flask app
@@ -20,13 +20,18 @@ def init_app(flask_app):
 
     Initialize the ingredients api and the SQLAlchemy object.
 
+    Before calling this function the application configuration must be loaded
+    into the application object through flask_app.config.from_object().
+
     Args:
         flask_app (Flask): The flask application object.
+
+    Returns:
+        SQLAlchemy: The SQLAlchemy database object.
     """
     with flask_app.app_context():
         DB.init_app(flask_app)
 
-        api = init_api()
-        api.init_app(flask_app)
+    flask_app.register_blueprint(API_V1)
 
     return DB

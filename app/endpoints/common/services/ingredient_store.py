@@ -44,7 +44,7 @@ def delete_ingredient(name):
     """Delete an existing ingredient from the database.
 
     Args:
-      name (string): The name of the ingredient to be deleted.
+        name (string): The name of the ingredient to be deleted.
     """
     ingredient_entity = IngredientEntity.query.filter_by(name=name).first()
     if ingredient_entity is not None:

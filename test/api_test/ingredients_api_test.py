@@ -1,4 +1,3 @@
-# pylint: disable=redefined-outer-name
 """Tests for the ingredients endpoint.
 """
 
@@ -7,7 +6,7 @@ import pytest
 
 from app import APP
 from app.app import init_app
-from app.endpoints.common.dtos.ingredient import IngredientSchema
+from app.endpoints.v1.payload.ingredient import IngredientSchema
 
 @pytest.fixture(scope="module")
 def test_client():
@@ -33,21 +32,21 @@ def test_post_with_valid_input(test_client):
     """
 
     # initially there should be no ingredients in the database
-    init_ingredients_resp = test_client.get("/ingredients/")
+    init_ingredients_resp = test_client.get("/api/v1/ingredients/")
     assert init_ingredients_resp.status_code == 200
     assert init_ingredients_resp.content_type == "application/json"
     init_ingredients = _parse_ingredients_response(init_ingredients_resp)
     assert not init_ingredients.data
 
     # next create a new ingredient
-    post_ingredient_resp = test_client.post("/ingredients/", json={"name" : "apple"})
+    post_ingredient_resp = test_client.post("/api/v1/ingredients/", json={"name" : "apple"})
     assert post_ingredient_resp.status_code == 201
     assert post_ingredient_resp.content_type == "application/json"
     post_ingredient = _parse_ingredient_response(post_ingredient_resp)
     assert post_ingredient.data.name == "apple"
 
     # now there should be one ingredient in the database
-    final_ingredients_resp = test_client.get("/ingredients/")
+    final_ingredients_resp = test_client.get("/api/v1/ingredients/")
     assert init_ingredients_resp.status_code == 200
     assert init_ingredients_resp.content_type == "application/json"
     final_ingredients = _parse_ingredients_response(final_ingredients_resp)
@@ -60,7 +59,7 @@ def test_post_with_invalid_input(test_client):
     Args:
         test_client (FlaskClient): The test client.
     """
-    post_ingredient_resp = test_client.post("/ingredients/", json={"foo" : "bar"})
+    post_ingredient_resp = test_client.post("/api/v1/ingredients/", json={"foo" : "bar"})
     assert post_ingredient_resp.status_code == 400
     assert post_ingredient_resp.content_type == "application/json"
     post_ingredient = json.loads(post_ingredient_resp.get_data(as_text=True))

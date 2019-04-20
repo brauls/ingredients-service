@@ -1,15 +1,14 @@
-"""REST interface module for random point generation on 2D circles.
+"""REST interface module for posting new ingredients and requesting existing ones.
 """
 
 from flask import request, jsonify
 from flask_restplus import Namespace, Resource, fields
 from werkzeug.exceptions import BadRequest
 
-from .common.services.ingredient_store import get_ingredients, get_ingredient, \
-    create_ingredient, delete_ingredient
-from .common.register_error_handler import register_error_handler
+from ..common.services.ingredient_store import get_ingredients, create_ingredient
+from .register_error_handler import register_error_handler
 
-from .common.dtos.ingredient import IngredientSchema
+from .payload.ingredient import Ingredient as IngredientRto, IngredientSchema
 
 API = Namespace(
     "ingredients",
@@ -36,7 +35,7 @@ class IngredientsApi(Resource):
         """Get a list of all available ingredients.
 
         Returns:
-            list(IngredientDto): The list of ingredients.
+            list(IngredientRto): The list of ingredients.
         """
         ingredient_schema = IngredientSchema(many=True)
 
@@ -52,8 +51,12 @@ class IngredientsApi(Resource):
         # circle = circle_validation.data
         # point_count = point_count_validation.data
 
-        ingredients = get_ingredients()
-        result = ingredient_schema.dump(ingredients)
+        ingredient_dtos = get_ingredients()
+
+        ingredient_rtos = [IngredientRto.from_ingredient_dto(ingredient_dto)
+                           for ingredient_dto in ingredient_dtos]
+
+        result = ingredient_schema.dump(ingredient_rtos)
         return jsonify(result.data)
 
     @API.doc("create_ingredient", responses={
@@ -76,9 +79,13 @@ class IngredientsApi(Resource):
         ingredient_validation = ingredient_schema.load(ingredient_json)
         if ingredient_validation.errors:
             raise BadRequest("Invalid ingredient definition supplied")
-        ingredient_posted = ingredient_validation.data
+        ingredient_rto_posted = ingredient_validation.data
 
-        ingredient_created = create_ingredient(ingredient_posted)
+        ingredient_dto_posted = ingredient_rto_posted.to_ingredient_dto()
 
-        result = ingredient_schema.dump(ingredient_created)
+        ingredient_dto_created = create_ingredient(ingredient_dto_posted)
+
+        ingredient_rto_created = IngredientRto.from_ingredient_dto(ingredient_dto_created)
+
+        result = ingredient_schema.dump(ingredient_rto_created)
         return result.data, 201
