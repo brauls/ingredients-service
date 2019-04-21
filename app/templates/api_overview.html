@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ingredients API versions</title>
+
+    <link rel="stylesheet" type="text/css" href="static/api_overview_style.css">
+</head>
+<body>
+    <h1>Ingredients API versions</h1>
+    <ul id="api_versions">
+    {% for version in api_versions %}
+        <li><a href="{{ version.url_prefix }}">{{ version.name }}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

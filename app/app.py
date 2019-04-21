@@ -4,6 +4,7 @@
 from flask import Flask
 
 from .endpoints.common.models import DB
+from .register_templates import register_api_overview
 from .endpoints.v1 import API_V1
 
 def create_app():
@@ -18,7 +19,9 @@ def create_app():
 def init_app(flask_app):
     """Initially configure the flask app.
 
-    Initialize the ingredients api and the SQLAlchemy object.
+    Initialize the SQLAlchemy object.
+    Initialize the ingredients api versions.
+    Initialize the start page containing the overview of all API versions.
 
     Before calling this function the application configuration must be loaded
     into the application object through flask_app.config.from_object().
@@ -33,5 +36,7 @@ def init_app(flask_app):
         DB.init_app(flask_app)
 
     flask_app.register_blueprint(API_V1)
+
+    register_api_overview(flask_app)
 
     return DB

@@ -2,27 +2,8 @@
 """
 
 import json
-import pytest
 
-from app import APP
-from app.app import init_app
 from app.endpoints.v1.payload.ingredient import IngredientSchema
-
-@pytest.fixture(scope="module")
-def test_client():
-    """Create a test api client to use for the test cases-
-
-    Returns:
-        FlaskClient: The test client.
-    """
-    APP.config.from_object("app.config.TestConfig")
-    database = init_app(APP)
-
-    # create database schema for test module
-    with APP.app_context():
-        database.create_all()
-
-    return APP.test_client()
 
 def test_post_with_valid_input(test_client):
     """Test posting one new ingredient and requesting the list of ingredients.

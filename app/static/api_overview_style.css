@@ -1,0 +1,13 @@
+:root {
+    --font-color: #3b4151;
+  }
+
+body {
+    font-family: 'Roboto';
+    font-size: 22px;
+    color: var(--font-color)
+}
+
+a, a:visited, a:hover, a:active {
+    color: var(--font-color)
+}
