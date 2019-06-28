@@ -17,11 +17,23 @@ API = Namespace(
 )
 register_error_handler(API)
 
-# Define api models here, because reusing marshmallow schema is currently no supported.
+# Define api models here, because reusing marshmallow schema is currently not supported.
 # see issue: https://github.com/noirbizarre/flask-restplus/issues/438
 INGREDIENT_POST_MODEL = API.model(
     "Ingredient",
-    {"name" : fields.String("The name of the ingredient")}
+    {
+        "name" : fields.String(
+            description="The name of the ingredient", required=True, example="banana"),
+        "availability_per_month" : fields.List(
+            fields.Integer(
+                min=1,
+                max=3,
+                description="The availability per month"),
+            min_items=12,
+            max_items=12,
+            required=True,
+            example=[1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3])
+    }
 )
 
 @API.route("/")
@@ -78,7 +90,7 @@ class IngredientsApi(Resource):
         ingredient_json = request.json
         ingredient_validation = ingredient_schema.load(ingredient_json)
         if ingredient_validation.errors:
-            raise BadRequest("Invalid ingredient definition supplied")
+            raise BadRequest("Invalid ingredient definition supplied.")
         ingredient_rto_posted = ingredient_validation.data
 
         ingredient_dto_posted = ingredient_rto_posted.to_ingredient_dto()

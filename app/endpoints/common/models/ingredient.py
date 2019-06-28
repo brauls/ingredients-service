@@ -11,6 +11,7 @@ class Ingredient(DB.Model):
 
     id = DB.Column(DB.Integer, primary_key=True)
     name = DB.Column(DB.String(80), unique=True, nullable=False)
+    availability = DB.relationship('IngredientAvailability', lazy='joined')
 
     def __repr__(self):
         return '<Ingredient %r>' % self.name
