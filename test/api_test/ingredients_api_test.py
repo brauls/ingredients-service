@@ -12,18 +12,18 @@ CONTENT_TYPE = "application/json"
 # create test data
 INGREDIENT_NAME = "pear"
 AVAILABILITY_PER_MONTH = [
-    Availability.STOCK.value,
-    Availability.IMPORTED.value,
-    Availability.IMPORTED.value,
-    Availability.IMPORTED.value,
-    Availability.IMPORTED.value,
-    Availability.IMPORTED.value,
-    Availability.FRESH.value,
-    Availability.FRESH.value,
-    Availability.FRESH.value,
-    Availability.FRESH.value,
-    Availability.STOCK.value,
-    Availability.STOCK.value
+    Availability.STOCK.name,
+    Availability.IMPORTED.name,
+    Availability.IMPORTED.name,
+    Availability.IMPORTED.name,
+    Availability.IMPORTED.name,
+    Availability.IMPORTED.name,
+    Availability.FRESH.name,
+    Availability.FRESH.name,
+    Availability.FRESH.name,
+    Availability.FRESH.name,
+    Availability.STOCK.name,
+    Availability.STOCK.name
 ]
 AVAILABILITY_PER_MONTH_TOO_LESS = AVAILABILITY_PER_MONTH[0:11]
 AVAILABILITY_PER_MONTH_TOO_MANY = [*AVAILABILITY_PER_MONTH, Availability.STOCK]
